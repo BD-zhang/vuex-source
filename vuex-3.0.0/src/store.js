@@ -10,6 +10,8 @@ export class Store {
     // Auto install if it is not done yet and `window` has `Vue`.
     // To allow users to avoid auto-installation in some cases,
     // this code should be placed here. See #731
+
+    // 这是用于在html文件中直接以script标签引入的情况
     if (!Vue && typeof window !== 'undefined' && window.Vue) {
       install(window.Vue)
     }
@@ -471,7 +473,10 @@ function unifyObjectStyle (type, payload, options) {
   return { type, payload, options }
 }
 
+// 提供用于在Vue.use()导入的install函数
+// https://v2.cn.vuejs.org/v2/guide/plugins.html
 export function install (_Vue) {
+  // 避免二次安装
   if (Vue && _Vue === Vue) {
     if (process.env.NODE_ENV !== 'production') {
       console.error(
